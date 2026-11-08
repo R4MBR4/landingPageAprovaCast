@@ -1,0 +1,162 @@
+/* ========================================== */
+/* RESET E CONFIGURAÇÕES GLOBAIS              */
+/* ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #1e293b;
+    background-color: #f8fafc;
+}
+
+/* ========================================== */
+/* CABEÇALHO FIXO (STICKY)                    */
+/* ========================================== */
+header {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 18px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #818cf8;
+    letter-spacing: 0.5px;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: #f1f5f9;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #818cf8;
+}
+
+/* ========================================== */
+/* CONFIGURAÇÃO DAS SEÇÕES                    */
+/* ========================================== */
+.sobre,
+.planos,
+.chatbot {
+    padding: 80px 8%;
+}
+
+.destaque {
+    color: #6366f1;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+/* ========================================== */
+/* SEÇÃO 1: SOBRE NÓS / HERO                  */
+/* ========================================== */
+.sobre {
+    background-color: #ffffff;
+}
+
+.sobre-conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+}
+
+.sobre-texto {
+    max-width: 600px;
+}
+
+.sobre-texto h1 {
+    font-size: 36px;
+    color: #0f172a;
+    margin: 15px 0 20px 0;
+    line-height: 1.25;
+}
+
+.sobre-texto p {
+    font-size: 16px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.botao {
+    display: inline-block;
+    background-color: #6366f1;
+    color: #ffffff;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.botao:hover {
+    background-color: #4f46e5;
+    transform: translateY(-2px);
+}
+
+.sobre-destaque {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    min-width: 280px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+}
+
+.sobre-destaque .simbolo {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+
+.sobre-destaque h2 {
+    font-size: 22px;
+    color: #818cf8;
+    margin-bottom: 8px;
+}
+
+.sobre-destaque p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+/* ========================================== */
+/* RODAPÉ                                     */
+/* ========================================== */
+footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 30px;
+    font-size: 14px;
+    border-top: 1px solid #1e293b;
+}
