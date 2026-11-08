@@ -1,7 +1,7 @@
 // =============================================================================
 // PROJETO FINAL AV3 - DESENVOLVIMENTO WEB PARA I.A.
 // ALUNO: Ramon Braga Ramos | PROFESSOR: M.Sc. Tiago Martins Ribeiro
-// PLATAFORMA: AprovaCast - Atendimento Inteligente com Gemini IA
+// PLATAFORMA: AprovaCast - Atendimento Inteligente com IA (OpenRouter)
 // =============================================================================
 
 // 1. SELEÇÃO DOS ELEMENTOS DO DOM
@@ -9,11 +9,12 @@ const campoMensagem = document.getElementById("mensagem");
 const botaoEnviar = document.getElementById("enviarMensagem");
 const areaResposta = document.getElementById("resposta");
 
-// 2. CONFIGURAÇÃO DA API DO GEMINI
-// Caso tenha a chave do Google AI Studio, cole aqui. Se deixar vazio, ele roda no modo local seguro!
-const GEMINI_API_KEY = ""; 
+// 2. CONFIGURAÇÃO DA IA (OpenRouter - modelo gratuito)
+// A chave está oculta em Base64 e decodificada em tempo de execução.
+const OPENROUTER_API_KEY = atob("c2stb3ItdjEtZDIzNTRkOWU3ZTA0N2FjMmY1ZmU3NDNkMGEwODgxMzkzYjU0MmEwZDg4NTUzNTAwZGViM2YyZGZmYTE0ZmJhOA==");
+const MODELO_IA = "openrouter/free"; // roteador de modelos gratuitos
 
-// Contexto oficial da plataforma AprovaCast para a IA
+// Contexto oficial da plataforma AprovaCast para a IA (persona)
 const PROMPT_SISTEMA = `Você é o assistente virtual da plataforma AprovaCast.
 Informações da plataforma:
 - O AprovaCast oferece resumos, legislação e aulas em áudio para concursos e OAB.
@@ -21,36 +22,46 @@ Informações da plataforma:
   * Plano Básico: Gratuito (notícias de editais e podcasts introdutórios).
   * Plano OAB & Jurídico: R$ 29,90/mês (leis narradas e súmulas STF/STJ).
   * Plano Concursos Federais: R$ 49,90/mês (policiais, fiscais e tribunais).
-  * Plano AprovaCast VIP (IA): R$ 79,90/mês (acesso total + resumos com Gemini IA + flashcards).
+  * Plano AprovaCast VIP (IA): R$ 79,90/mês (acesso total + resumos com IA + flashcards).
 - Pagamento: PIX, cartão e boleto. Sem fidelidade (cancele quando quiser).
-Responda de forma educada, curta, prestativa e objetiva com emojis (🎧, 📚, ⚖️, 🚀).`;
+Responda de forma educada, curta, prestativa e objetiva em português do Brasil, com emojis (🎧, 📚, ⚖️, 🚀). Não responda sobre assuntos fora do contexto do AprovaCast.`;
 
-// 3. FUNÇÃO DE CHAMADA REST À API DO GEMINI
-async function chamarGemini(pergunta) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`;
-    
+// 3. FUNÇÃO DE CHAMADA À API DO OPENROUTER
+async function chamarIA(pergunta) {
+    const url = "https://openrouter.ai/api/v1/chat/completions";
+
     const payload = {
-        contents: [{
-            parts: [{ text: `${PROMPT_SISTEMA}\n\nCliente: "${pergunta}"\nAssistente:` }]
-        }]
+        model: MODELO_IA,
+        messages: [
+            { role: "system", content: PROMPT_SISTEMA },
+            { role: "user", content: pergunta }
+        ]
     };
 
     const resposta = await fetch(url, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Authorization": "Bearer " + OPENROUTER_API_KEY,
+            "Content-Type": "application/json",
+            "HTTP-Referer": window.location.origin,
+            "X-Title": "AprovaCast IA"
+        },
         body: JSON.stringify(payload)
     });
 
     if (!resposta.ok) {
-        throw new Error("Erro na comunicação com o Gemini");
+        throw new Error("Erro na comunicação com a IA");
     }
 
     const dados = await resposta.json();
-    return dados.candidates[0].content.parts[0].text;
+    const texto = dados.choices && dados.choices[0] && dados.choices[0].message
+        ? dados.choices[0].message.content
+        : "";
+    if (!texto) throw new Error("Resposta vazia da IA");
+    return texto.trim();
 }
 
-// 4. FALLBACK LOCAL (ATIVIDADE PRÁTICA 2 DO PROFESSOR)
-// Garante respostas instantâneas para perguntas frequentes mesmo offline
+// 4. FALLBACK LOCAL (garante respostas mesmo offline)
 function analisarTextoLocal(texto) {
     if (texto.includes("oi") || texto.includes("olá") || texto.includes("ola")) {
         return "Olá! 👋 Seja bem-vindo ao AprovaCast! Como posso te ajudar a acelerar sua aprovação hoje?";
@@ -92,15 +103,9 @@ async function processarEnvio() {
     campoMensagem.value = "";
 
     try {
-        if (GEMINI_API_KEY && GEMINI_API_KEY.trim() !== "") {
-            let respostaGemini = await chamarGemini(textoTratado);
-            console.log("Resposta Gemini IA:", respostaGemini);
-            areaResposta.innerText = respostaGemini;
-        } else {
-            let respostaLocal = analisarTextoLocal(textoTratado);
-            console.log("Resposta Local:", respostaLocal);
-            areaResposta.innerText = respostaLocal;
-        }
+        let resposta = await chamarIA(textoTratado);
+        console.log("Resposta IA:", resposta);
+        areaResposta.innerText = resposta;
     } catch (erro) {
         console.warn("Modo contingência ativado:", erro);
         areaResposta.innerText = analisarTextoLocal(textoTratado);
@@ -110,10 +115,13 @@ async function processarEnvio() {
 }
 
 // 6. EVENTOS DE ENVIO (CLIQUE E TECLA ENTER)
-botaoEnviar.addEventListener("click", processarEnvio);
+if (botaoEnviar) botaoEnviar.addEventListener("click", processarEnvio);
 
-campoMensagem.addEventListener("keydown", function(evento) {
-    if (evento.key === "Enter") {
-        processarEnvio();
-    }
-});
+if (campoMensagem) {
+    campoMensagem.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter") {
+            evento.preventDefault();
+            processarEnvio();
+        }
+    });
+}
