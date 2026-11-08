@@ -74,6 +74,77 @@ nav a:hover {
 }
 
 /* ========================================== */
+/* SEÇÃO DE PLANOS (JULIANA) */
+/* ========================================== */
+.planos {
+    background-color: #f1f5f9;
+    padding: 80px 8%;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.titulo h2 {
+    font-size: 32px;
+    color: #0f172a;
+    margin: 8px 0;
+}
+
+.titulo p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.planos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.plano {
+    background-color: #ffffff;
+    padding: 35px 22px;
+    border-radius: 12px;
+    text-align: center;
+    border-top: 4px solid #6366f1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plano:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(99, 102, 241, 0.15);
+}
+
+.plano-icone {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.plano h3 {
+    font-size: 20px;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.plano p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    min-height: 60px;
+}
+
+.plano strong {
+    font-size: 20px;
+    color: #6366f1;
+    display: block;
+}
+
+
+/* ========================================== */
 /* SEÇÃO 1: SOBRE NÓS / HERO                  */
 /* ========================================== */
 .sobre {
