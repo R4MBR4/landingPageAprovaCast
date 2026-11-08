@@ -24,6 +24,7 @@
         <nav>
             <a href="#sobre">Sobre Nós</a>
             <a href="#planos">Nossos Planos</a>
+            <a href="#contato">Inscrição Grátis</a>
             <a href="#chatbot">Tirar Dúvidas (IA)</a>
         </nav>
     </header>
@@ -77,14 +78,116 @@
     </section>
 
 
-    <!-- ============================================================== -->
-    <!-- [JULIANA]: A SEÇÃO #planos (CARDS DE VALORES) ENTRARÁ AQUI    -->
-    <!-- ============================================================== -->
+   <!-- ========================================== -->
+<!-- SEÇÃO 2: PLANOS E ASSINATURAS (JULIANA) -->
+<!-- ========================================== -->
+<section id="planos" class="planos">
+    <div class="titulo">
+        <span class="destaque">NOSSOS PLANOS</span>
+        <h2>Escolha a melhor forma de estudar</h2>
+        <p>Tenha acesso a conteúdos em áudio gravados por especialistas e resumidos por IA.</p>
+    </div>
+
+    <div class="planos-container">
+        <!-- Card 1: Gratuito -->
+        <div class="plano">
+            <div class="plano-icone">🎧</div>
+            <h3>Plano Básico</h3>
+            <p>Acesso diário a notícias de editais e podcasts introdutórios de matérias gerais.</p>
+            <strong>Gratuito</strong>
+        </div>
+
+        <!-- Card 2: OAB e Jurídico -->
+        <div class="plano">
+            <div class="plano-icone">⚖️</div>
+            <h3>OAB & Jurídico</h3>
+            <p>Legislação seca em áudio narrada na velocidade que você quiser + súmulas do STF/STJ.</p>
+            <strong>R$ 29,90 /mês</strong>
+        </div>
+
+        <!-- Card 3: Concursos Federais -->
+        <div class="plano">
+            <div class="plano-icone">🏛️</div>
+            <h3>Concursos Federais</h3>
+            <p>Carreiras Policiais, Fiscais e Administrativas com simulados e jurisprudência em áudio.</p>
+            <strong>R$ 49,90 /mês</strong>
+        </div>
+
+        <!-- Card 4: VIP Total IA -->
+        <div class="plano">
+            <div class="plano-icone">🤖</div>
+            <h3>AprovaCast VIP (IA)</h3>
+            <p>Acesso total + resumos com Gemini IA, flashcards em áudio e dúvidas no Chatbot 24h.</p>
+            <strong>R$ 79,90 /mês</strong>
+        </div>
+    </div>
+</section>
+    <!-- ========================================== -->
+    <!-- SEÇÃO 4: FORMULÁRIO DE INSCRIÇÃO E CONTATO -->
+    <!-- ========================================== -->
+<section id="contato" class="contato">
+     <div class="titulo">
+        <span class="destaque">COMECE AGORA</span>
+        <h2>Receba Aulas em Áudio Gratuitas</h2>
+        <p>Cadastre-se para receber novidades de editais e episódios exclusivos no seu e-mail.</p>
+    </div>
+
+    <form class="formulario-contato" onsubmit="event.preventDefault(); alert('Inscrição realizada com sucesso! Bem-vindo ao AprovaCast.');">
+        <div class="campo-grupo">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" placeholder="Digite seu nome..." required>
+        </div>
+
+        <div class="campo-grupo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+        </div>
+
+        <div class="campo-grupo">
+            <label for="carreira">Carreira de Interesse</label>
+            <select id="carreira" required>
+                <option value="">Selecione sua área...</option>
+                <option value="policial">Carreiras Policiais (PF, PRF, PC)</option>
+                <option value="juridica">OAB e Carreiras Jurídicas</option>
+                <option value="fiscal">Carreiras Fiscais e Administrativas</option>
+                <option value="vestibular">ENEM e Vestibulares</option>
+                </select>
+            </div>
+
+            <button type="submit" class="botao-formulario">Quero Receber Áudios Grátis</button>
+    </form>
+</section>
 
 
     <!-- ============================================================== -->
-    <!-- [RAMON]: A SEÇÃO #chatbot (ASSISTENTE VIRTUAL) ENTRARÁ AQUI   -->
+    <!-- [RILLEY]: SEÇÃO #chatbot (ASSISTENTE VIRTUAL)                  -->
     <!-- ============================================================== -->
+    <section id="chatbot" class="chatbot">
+        <div class="chatbot-cabecalho">
+            <span class="destaque">ATENDIMENTO COM INTELIGÊNCIA ARTIFICIAL</span>
+            <h2>Assistente Virtual AprovaCast</h2>
+            <p>Tire suas dúvidas sobre os planos, matérias e conteúdos do AprovaCast. Nossa IA está pronta para ajudar você!</p>
+        </div>
+
+        <div class="chat-card">
+            <div class="chat-topo">
+                <div class="chat-avatar">🤖</div>
+                <div class="chat-info">
+                    <span class="chat-nome">AprovaCast IA</span>
+                    <span class="chat-status"><span class="status-ponto"></span> Online</span>
+                </div>
+            </div>
+
+            <div id="resposta" class="chat-resposta">
+                Olá! 👋 Sou o assistente virtual do AprovaCast. Como posso ajudar você hoje? Pergunte sobre nossos planos, matérias ou funcionalidades!
+            </div>
+
+            <div class="chat-entrada">
+                <input type="text" id="mensagem" placeholder="Digite sua dúvida..." />
+                <button id="enviarMensagem">Enviar</button>
+            </div>
+        </div>
+    </section>
 
 
     <!-- ========================================== -->

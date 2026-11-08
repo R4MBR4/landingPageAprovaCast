@@ -74,6 +74,77 @@ nav a:hover {
 }
 
 /* ========================================== */
+/* SEÇÃO DE PLANOS (JULIANA) */
+/* ========================================== */
+.planos {
+    background-color: #f1f5f9;
+    padding: 80px 8%;
+}
+
+.titulo {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.titulo h2 {
+    font-size: 32px;
+    color: #0f172a;
+    margin: 8px 0;
+}
+
+.titulo p {
+    color: #64748b;
+    font-size: 15px;
+}
+
+.planos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 25px;
+}
+
+.plano {
+    background-color: #ffffff;
+    padding: 35px 22px;
+    border-radius: 12px;
+    text-align: center;
+    border-top: 4px solid #6366f1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.plano:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(99, 102, 241, 0.15);
+}
+
+.plano-icone {
+    font-size: 40px;
+    margin-bottom: 15px;
+}
+
+.plano h3 {
+    font-size: 20px;
+    color: #0f172a;
+    margin-bottom: 10px;
+}
+
+.plano p {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    min-height: 60px;
+}
+
+.plano strong {
+    font-size: 20px;
+    color: #6366f1;
+    display: block;
+}
+
+
+/* ========================================== */
 /* SEÇÃO 1: SOBRE NÓS / HERO                  */
 /* ========================================== */
 .sobre {
@@ -159,4 +230,201 @@ footer {
     padding: 30px;
     font-size: 14px;
     border-top: 1px solid #1e293b;
+}/* ========================================== */
+/* SEÇÃO: CHATBOT (ASSISTENTE VIRTUAL)        */
+/* ========================================== */
+.chatbot {
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.chatbot-cabecalho {
+    margin-bottom: 40px;
+}
+
+.chatbot-cabecalho h2 {
+    font-size: 32px;
+    color: #0f172a;
+    margin: 12px 0 10px 0;
+}
+
+.chatbot-cabecalho p {
+    font-size: 16px;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.chat-card {
+    max-width: 520px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.chat-topo {
+    background-color: #0f172a;
+    color: #ffffff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chat-avatar {
+    font-size: 28px;
+    line-height: 1;
+}
+
+.chat-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.chat-nome {
+    font-weight: 700;
+    font-size: 16px;
+    color: #f1f5f9;
+}
+
+.chat-status {
+    font-size: 13px;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-ponto {
+    width: 10px;
+    height: 10px;
+    background-color: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.chat-resposta {
+    padding: 20px;
+    min-height: 110px;
+    text-align: left;
+    color: #1e293b;
+    font-size: 15px;
+    line-height: 1.6;
+    background-color: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.chat-entrada {
+    display: flex;
+    gap: 10px;
+    padding: 16px 20px;
+    background-color: #ffffff;
+}
+
+.chat-entrada input#mensagem {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.chat-entrada input#mensagem:focus {
+    border-color: #6366f1;
+}
+
+.chat-entrada button#enviarMensagem {
+    background-color: #6366f1;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-entrada button#enviarMensagem:hover {
+    background-color: #4f46e5;
+}
+
+@media (max-width: 600px) {
+    .chat-card {
+        max-width: 100%;
+    }
+    .chatbot-cabecalho h2 {
+        font-size: 26px;
+    }
+}
+
+/* ========================================== */
+/* SEÇÃO DE CONTATO / FORMULÁRIO              */
+/* ========================================== */
+.contato {
+    padding: 80px 8%;
+    background-color: #f8fafc;
+}
+
+.formulario-contato {
+    max-width: 550px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 35px 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.campo-grupo {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.campo-grupo label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.campo-grupo input,
+.campo-grupo select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+    border-color: #6366f1;
+}
+
+.botao-formulario {
+    width: 100%;
+    background-color: #6366f1;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-formulario:hover {
+    background-color: #4f46e5;
 }
