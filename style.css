@@ -364,3 +364,67 @@ footer {
         font-size: 26px;
     }
 }
+
+/* ========================================== */
+/* SEÇÃO DE CONTATO / FORMULÁRIO              */
+/* ========================================== */
+.contato {
+    padding: 80px 8%;
+    background-color: #f8fafc;
+}
+
+.formulario-contato {
+    max-width: 550px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 35px 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.campo-grupo {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.campo-grupo label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 6px;
+}
+
+.campo-grupo input,
+.campo-grupo select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 14.5px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.campo-grupo input:focus,
+.campo-grupo select:focus {
+    border-color: #6366f1;
+}
+
+.botao-formulario {
+    width: 100%;
+    background-color: #6366f1;
+    color: #ffffff;
+    border: none;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.botao-formulario:hover {
+    background-color: #4f46e5;
+}
