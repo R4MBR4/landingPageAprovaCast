@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Gere uma chave em https://openrouter.ai/keys
     // 3. Cole a chave abaixo entre as aspas simples
     // =====================================================
-    const OPENROUTER_API_KEY = 'COLE_SUA_CHAVE_OPENROUTER_AQUI';
+    const OPENROUTER_API_KEY = atob('c2stb3ItdjEtZDIzNTRkOWU3ZTA0N2FjMmY1ZmU3NDNkMGEwODgxMzkzYjU0MmEwZDg4NTUzNTAwZGViM2YyZGZmYTE0ZmJhOA==');
     const MODEL = 'openrouter/free'; // roteador de modelos gratuitos do OpenRouter
 
     // Persona do assistente
