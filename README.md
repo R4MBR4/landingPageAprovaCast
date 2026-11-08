@@ -6,8 +6,8 @@ Projeto Final desenvolvido para a **3ª Avaliação (AV3)** da disciplina de **D
 
 ## 👥 Equipe de Desenvolvimento
 * **Ramon Braga Ramos:** Estrutura Base, Configuração do Repositório e Chatbot com IA
-* **Juliana:** Vitrine de Planos & Recursos, CSS Grid e Estilização Visual
-* **Rilley:** Colaborador / Apoio de Interface
+* **Juliana Jerônimo de Oliveira Sousa:** Vitrine de Planos & Recursos, CSS Grid e Estilização Visual
+* **Rilley Alencar Carvalho:** Colaborador / Apoio de Interface
 
 👨‍🏫 **Professor Orientador:** M.Sc. Tiago Martins Ribeiro  
 📅 **Data de Entrega:** 08/11/2026  
