@@ -293,3 +293,207 @@ footer {
         font-size: 26px;
     }
 }
+/* ========================================== */
+/* SEÇÃO: PLANOS                              */
+/* ========================================== */
+.planos {
+    background-color: #f8fafc;
+    text-align: center;
+}
+
+.planos-cabecalho {
+    margin-bottom: 40px;
+}
+
+.planos-cabecalho h2 {
+    font-size: 32px;
+    color: #0f172a;
+    margin: 12px 0 10px 0;
+}
+
+.planos-cabecalho p {
+    font-size: 16px;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.planos-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+.plano-card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 30px 24px;
+    max-width: 300px;
+    flex: 1 1 260px;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+.plano-card.plano-destaque {
+    border-color: #6366f1;
+    box-shadow: 0 10px 28px rgba(99, 102, 241, 0.18);
+}
+
+.plano-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #6366f1;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 999px;
+}
+
+.plano-card h3 {
+    font-size: 22px;
+    color: #0f172a;
+}
+
+.plano-preco {
+    font-size: 28px;
+    font-weight: 800;
+    color: #6366f1;
+}
+
+.plano-preco span {
+    font-size: 14px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.plano-recursos {
+    list-style: none;
+    text-align: left;
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.8;
+    flex: 1;
+}
+
+/* ========================================== */
+/* SEÇÃO: CONTATO (FORMULÁRIO)                */
+/* ========================================== */
+.contato {
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.contato-cabecalho {
+    margin-bottom: 40px;
+}
+
+.contato-cabecalho h2 {
+    font-size: 32px;
+    color: #0f172a;
+    margin: 12px 0 10px 0;
+}
+
+.contato-cabecalho p {
+    font-size: 16px;
+    color: #475569;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.form-contato {
+    max-width: 520px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+.form-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-grupo label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.form-grupo input,
+.form-grupo textarea {
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus {
+    border-color: #6366f1;
+}
+
+.form-status {
+    font-size: 14px;
+    text-align: center;
+    min-height: 20px;
+}
+
+.form-status.sucesso {
+    color: #16a34a;
+}
+
+.form-status.erro {
+    color: #dc2626;
+}
+
+@media (max-width: 600px) {
+    .planos-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* ========================================== */
+/* MENSAGENS DO CHAT                          */
+/* ========================================== */
+.chat-msg {
+    margin-bottom: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    max-width: 85%;
+    word-wrap: break-word;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.chat-user {
+    background-color: #6366f1;
+    color: #ffffff;
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-bot {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.chat-digitando {
+    font-style: italic;
+    color: #64748b;
+}

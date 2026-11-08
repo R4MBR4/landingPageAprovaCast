@@ -25,6 +25,7 @@
             <a href="#sobre">Sobre Nós</a>
             <a href="#planos">Nossos Planos</a>
             <a href="#chatbot">Tirar Dúvidas (IA)</a>
+            <a href="#contato">Contato</a>
         </nav>
     </header>
 
@@ -78,8 +79,54 @@
 
 
     <!-- ============================================================== -->
-    <!-- [JULIANA]: A SEÇÃO #planos (CARDS DE VALORES) ENTRARÁ AQUI    -->
+    <!-- [JULIANA]: SEÇÃO #planos (CARDS DE VALORES)                   -->
     <!-- ============================================================== -->
+    <section id="planos" class="planos">
+        <div class="planos-cabecalho">
+            <span class="destaque">NOSSOS PLANOS</span>
+            <h2>Escolha o plano ideal para sua preparação</h2>
+            <p>Estude com áudio de alta qualidade, resumos gerados por IA e acesso completo à plataforma.</p>
+        </div>
+
+        <div class="planos-grid">
+            <div class="plano-card">
+                <h3>Starter</h3>
+                <p class="plano-preco">R$ 19,90<span>/mês</span></p>
+                <ul class="plano-recursos">
+                    <li>✔ Acesso a 50 aulas em áudio</li>
+                    <li>✔ Resumos de editais</li>
+                    <li>✔ Player offline</li>
+                    <li>✖ Suporte prioritário</li>
+                </ul>
+                <a href="#contato" class="botao">Assinar</a>
+            </div>
+
+            <div class="plano-card plano-destaque">
+                <span class="plano-badge">Mais popular</span>
+                <h3>Pro</h3>
+                <p class="plano-preco">R$ 39,90<span>/mês</span></p>
+                <ul class="plano-recursos">
+                    <li>✔ Acesso ilimitado a aulas</li>
+                    <li>✔ Resumos + legislação narrada</li>
+                    <li>✔ Player offline</li>
+                    <li>✔ Suporte prioritário</li>
+                </ul>
+                <a href="#contato" class="botao">Assinar</a>
+            </div>
+
+            <div class="plano-card">
+                <h3>Premium</h3>
+                <p class="plano-preco">R$ 69,90<span>/mês</span></p>
+                <ul class="plano-recursos">
+                    <li>✔ Tudo do plano Pro</li>
+                    <li>✔ Mentoria com IA personalizada</li>
+                    <li>✔ Simulados em áudio</li>
+                    <li>✔ Certificado de conclusão</li>
+                </ul>
+                <a href="#contato" class="botao">Assinar</a>
+            </div>
+        </div>
+    </section>
 
 
     <!-- ============================================================== -->
@@ -112,6 +159,38 @@
         </div>
     </section>
 
+
+    <!-- ============================================================== -->
+    <!-- [RAMON]: SEÇÃO #contato (FORMULÁRIO)                          -->
+    <!-- ============================================================== -->
+    <section id="contato" class="contato">
+        <div class="contato-cabecalho">
+            <span class="destaque">FALE CONOSCO</span>
+            <h2>Entre em contato</h2>
+            <p>Dúvidas, sugestões ou interesse em assinar? Envie uma mensagem e retornaremos em breve.</p>
+        </div>
+
+        <form id="formContato" class="form-contato">
+            <div class="form-grupo">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+            </div>
+            <div class="form-grupo">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+            </div>
+            <div class="form-grupo">
+                <label for="assunto">Assunto</label>
+                <input type="text" id="assunto" name="assunto" placeholder="Ex.: Dúvida sobre planos" />
+            </div>
+            <div class="form-grupo">
+                <label for="mensagemContato">Mensagem</label>
+                <textarea id="mensagemContato" name="mensagemContato" rows="4" placeholder="Escreva sua mensagem..." required></textarea>
+            </div>
+            <button type="submit" id="enviarContato" class="botao">Enviar mensagem</button>
+            <p id="formStatus" class="form-status"></p>
+        </form>
+    </section>
 
     <!-- ========================================== -->
     <!-- RODAPÉ                                     -->
