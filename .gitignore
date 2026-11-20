@@ -1,0 +1,10 @@
+# Arquivos de ambiente e segredos (NÃO subir no GitHub)
+.env
+
+# Cache do Python
+__pycache__/
+*.pyc
+
+# Ambientes virtuais
+venv/
+.venv/
