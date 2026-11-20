@@ -1,6 +1,6 @@
 # =============================================================================
 # PROJETO FINAL INTERDISCIPLINAR - AV3 (PIT)
-# BACK-END EM PYTHON (FLASK) COM POSTGRESQL E IA
+# BACK-END EM PYTHON (FLASK) COM POSTGRESQL E GOOGLE GEMINI
 # Disciplinas: Desenvolvimento Web para IA & Banco de Dados
 # =============================================================================
 
@@ -109,7 +109,7 @@ def salvar_inscricao():
         return jsonify({"erro": "Erro interno ao salvar no banco."}), 500
 
 # -----------------------------------------------------------------------------
-# ROTA 4: ATENDIMENTO COM IA (Protegendo a chave da API no servidor)
+# ROTA 4: ATENDIMENTO COM GOOGLE GEMINI (API REST Oficial com Blindagem)
 # -----------------------------------------------------------------------------
 PROMPT_SISTEMA = (
     "Você é o assistente virtual oficial da plataforma AprovaCast. "
@@ -119,7 +119,7 @@ PROMPT_SISTEMA = (
     "  * Plano Básico: Gratuito (notícias de editais e podcasts introdutórios). "
     "  * Plano OAB & Jurídico: R$ 29,90/mês (leis narradas e súmulas STF/STJ). "
     "  * Plano Concursos Federais: R$ 49,90/mês (policiais, fiscais e tribunais). "
-    "  * Plano AprovaCast VIP (IA): R$ 79,90/mês (acesso total + resumos com IA + flashcards). "
+    "  * Plano AprovaCast VIP (IA): R$ 79,90/mês (acesso total + resumos com Gemini IA + flashcards). "
     "- Pagamento: PIX, cartão e boleto. Sem fidelidade (cancele quando quiser). "
     "Responda de forma educada, curta, prestativa e objetiva em português do Brasil, "
     "usando emojis (🎧, 📚, ⚖️, 🚀). Não responda sobre assuntos fora do contexto do AprovaCast."
@@ -135,42 +135,42 @@ def chat():
     if not mensagem:
         return jsonify({"erro": "A mensagem não pode estar vazia."}), 400
 
-    api_key = os.getenv("OPENROUTER_API_KEY")
-    if not api_key:
-        return jsonify({"erro": "Chave da IA não configurada no servidor."}), 500
+    gemini_key = os.getenv("GEMINI_API_KEY")
+    if not gemini_key:
+        return jsonify({"erro": "Chave do Gemini não configurada no servidor."}), 500
 
     try:
-        url = "https://openrouter.ai/api/v1/chat/completions"
+        # Chamada REST direta para a API Oficial do Google Gemini
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key={gemini_key}"
+        
         payload = {
-            "model": "openrouter/free",
-            "messages": [
-                {"role": "system", "content": PROMPT_SISTEMA},
-                {"role": "user", "content": mensagem}
+            "system_instruction": {
+                "parts": [{"text": PROMPT_SISTEMA}]
+            },
+            "contents": [
+                {
+                    "parts": [{"text": mensagem}]
+                }
             ]
         }
-        headers = {
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-            "HTTP-Referer": "http://localhost:5000",
-            "X-Title": "AprovaCast IA"
-        }
 
-        resposta = requests.post(url, json=payload, headers=headers, timeout=20)
+        resposta = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=20)
         
         if resposta.status_code == 200:
             resultado = resposta.json()
-            texto_ia = resultado["choices"][0]["message"]["content"].strip()
+            texto_ia = resultado["candidates"][0]["content"]["parts"][0]["text"].strip()
             return jsonify({"resposta": texto_ia}), 200
         else:
-            return jsonify({"erro": "IA temporariamente indisponível."}), 502
+            print("Erro retornado pelo Gemini:", resposta.status_code, resposta.text)
+            return jsonify({"erro": "Falha na comunicação com o Gemini."}), 502
 
     except Exception as erro:
-        print("Erro na rota de chat:", erro)
+        print("Erro no chat:", erro)
         return jsonify({"erro": "Erro de conexão com o serviço de IA."}), 500
 
 # -----------------------------------------------------------------------------
 # INICIALIZAÇÃO DO SERVIDOR
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    print("🚀 Servidor AprovaCast rodando em http://localhost:5000")
+    print("🚀 Servidor AprovaCast com Google Gemini rodando em http://localhost:5000")
     app.run(debug=True, port=5000)

@@ -428,3 +428,43 @@ footer {
 .botao-formulario:hover {
     background-color: #4f46e5;
 }
+/* ========================================== */
+/* MELHORIAS DE RESPONSIVIDADE (MOBILE)       */
+/* ========================================== */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 5%;
+        text-align: center;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 18px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .sobre, .planos, .chatbot, .contato {
+        padding: 50px 5%;
+    }
+
+    .sobre-conteudo {
+        flex-direction: column;
+        text-align: center;
+        gap: 35px;
+    }
+
+    .sobre-texto h1 {
+        font-size: 28px;
+    }
+
+    .sobre-destaque {
+        width: 100%;
+        min-width: auto;
+    }
+}
