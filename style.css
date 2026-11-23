@@ -113,6 +113,27 @@ nav a:hover {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Lista de recursos de cada plano (vinda da tabela plano_recurso) */
+.plano-recursos {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 18px;
+    text-align: left;
+    font-size: 14px;
+    color: #475569;
+}
+
+.plano-recursos li {
+    padding: 6px 0;
+    border-top: 1px solid #e2e8f0;
+}
+
+.plano-recursos li::before {
+    content: "✓ ";
+    color: #6366f1;
+    font-weight: 700;
+}
+
 .plano:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 25px rgba(99, 102, 241, 0.15);
@@ -230,7 +251,9 @@ footer {
     padding: 30px;
     font-size: 14px;
     border-top: 1px solid #1e293b;
-}/* ========================================== */
+}
+
+/* ========================================== */
 /* SEÇÃO: CHATBOT (ASSISTENTE VIRTUAL)        */
 /* ========================================== */
 .chatbot {
@@ -428,6 +451,7 @@ footer {
 .botao-formulario:hover {
     background-color: #4f46e5;
 }
+
 /* ========================================== */
 /* MELHORIAS DE RESPONSIVIDADE (MOBILE)       */
 /* ========================================== */

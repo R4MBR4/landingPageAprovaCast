@@ -6,6 +6,25 @@
 // =============================================================================
 // 1. CARREGAMENTO DOS PLANOS DO BANCO DE DADOS POSTGRESQL (Requisito do Edital)
 // =============================================================================
+const ICONES_PLANOS = ["🎧", "⚖️", "🏛️", "🤖"];
+
+// Preenche a lista "Plano de Interesse" do formulário com os planos do banco
+function atualizarOpcoesDoFormulario(planos) {
+    const selectPlano = document.getElementById("plano");
+    if (!selectPlano) return;
+
+    selectPlano.innerHTML = '<option value="">Selecione um plano...</option>';
+    planos.forEach(plano => {
+        const preco = plano.preco === 0
+            ? "Gratuito"
+            : `R$ ${plano.preco.toFixed(2).replace(".", ",")}/mês`;
+        const opcao = document.createElement("option");
+        opcao.value = plano.id_plano;
+        opcao.textContent = `${plano.nome} (${preco})`;
+        selectPlano.appendChild(opcao);
+    });
+}
+
 async function carregarPlanosDoBanco() {
     const container = document.getElementById("planosContainer");
     if (!container) return;
@@ -20,7 +39,7 @@ async function carregarPlanosDoBanco() {
         if (planos && planos.length > 0) {
             container.innerHTML = ""; // Limpa o container
 
-            planos.forEach(plano => {
+            planos.forEach((plano, indice) => {
                 const card = document.createElement("div");
                 card.className = "plano";
 
@@ -28,14 +47,22 @@ async function carregarPlanosDoBanco() {
                     ? "Gratuito" 
                     : `R$ ${plano.preco.toFixed(2).replace(".", ",")} /mês`;
 
+                // Recursos do plano vêm da tabela associativa plano_recurso (N:N)
+                const listaRecursos = (plano.recursos || [])
+                    .map(recurso => `<li>${recurso}</li>`)
+                    .join("");
+
                 card.innerHTML = `
-                    <div class="plano-icone">${plano.icone}</div>
+                    <div class="plano-icone">${ICONES_PLANOS[indice] || "🎧"}</div>
                     <h3>${plano.nome}</h3>
-                    <p>${plano.descricao}</p>
+                    <p>${plano.descricao || ""}</p>
+                    <ul class="plano-recursos">${listaRecursos}</ul>
                     <strong>${precoFormatado}</strong>
                 `;
                 container.appendChild(card);
             });
+
+            atualizarOpcoesDoFormulario(planos);
             console.log("✅ Planos carregados do PostgreSQL com sucesso!");
         }
     } catch (erro) {
@@ -55,10 +82,10 @@ if (formInscricao) {
 
         const nome = document.getElementById("nome").value.trim();
         const email = document.getElementById("email").value.trim();
-        const carreira = document.getElementById("carreira").value;
+        const idPlano = document.getElementById("plano").value;
         const botaoSubmit = formInscricao.querySelector("button[type='submit']");
 
-        if (!nome || !email || !carreira) {
+        if (!nome || !email || !idPlano) {
             exibirFeedback("Preencha todos os campos obrigatórios!", false);
             return;
         }
@@ -72,7 +99,7 @@ if (formInscricao) {
             const resposta = await fetch("/api/inscricao", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ nome, email, carreira })
+                body: JSON.stringify({ nome, email, id_plano: Number(idPlano) })
             });
 
             const dados = await resposta.json();
@@ -114,8 +141,14 @@ const botaoEnviar = document.getElementById("enviarMensagem");
 const areaResposta = document.getElementById("resposta");
 
 // Fallback local caso o servidor ou a API fiquem offline
+// Verifica se o texto contém a palavra inteira (evita achar "oi" dentro de "depois")
+function temPalavra(texto, palavra) {
+    const padrao = new RegExp(`(^|[^\\p{L}])${palavra}([^\\p{L}]|$)`, "u");
+    return padrao.test(texto);
+}
+
 function analisarTextoLocal(texto) {
-    if (texto.includes("oi") || texto.includes("olá") || texto.includes("ola")) {
+    if (temPalavra(texto, "oi") || temPalavra(texto, "olá") || temPalavra(texto, "ola")) {
         return "Olá! 👋 Seja bem-vindo ao AprovaCast! Como posso te ajudar a acelerar sua aprovação hoje?";
     } else if (texto.includes("bom dia")) {
         return "Bom dia! ☀️ Pronto para revisar suas matérias em áudio hoje?";
@@ -154,13 +187,15 @@ async function processarEnvio() {
         const resposta = await fetch("/api/chat", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ mensagem: textoTratado })
+            body: JSON.stringify({ mensagem: textoOriginal.trim() })
         });
 
         if (!resposta.ok) throw new Error("Erro na resposta da API");
 
         const dados = await resposta.json();
-        areaResposta.innerText = dados.resposta || analisarTextoLocal(textoTratado);
+        // Remove marcações de Markdown (**negrito**) que a IA às vezes devolve
+        const textoIA = (dados.resposta || "").replace(/\*\*/g, "").replace(/^\s*[*-]\s+/gm, "• ");
+        areaResposta.innerText = textoIA || analisarTextoLocal(textoTratado);
     } catch (erro) {
         console.warn("Modo contingência ativado (fallback local):", erro);
         areaResposta.innerText = analisarTextoLocal(textoTratado);
