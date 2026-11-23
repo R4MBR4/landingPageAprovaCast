@@ -1,17 +1,12 @@
-# Esquema Relacional - AprovaCast
+# Esquema relacional — AprovaCast
 
-## 1. Tabelas e Atributos
+plano         (id_plano PK, nome UNIQUE, preco, descricao)
+recurso       (id_recurso PK, nome UNIQUE, descricao)
+plano_recurso (id_plano PK/FK -> plano, id_recurso PK/FK -> recurso)
+cliente       (id_cliente PK, nome, email UNIQUE, telefone, data_cadastro)
+inscricao     (id_inscricao PK, id_cliente FK -> cliente, id_plano FK -> plano, data_inscricao, status)
+mensagem      (id_mensagem PK, id_cliente FK -> cliente, conteudo, resposta, data_envio)
 
-* **categoria** (<u>id_categoria</u>, nome)
-* **conteudo** (<u>id_conteudo</u>, *id_categoria*, titulo, duracao_minutos)
-  * *id_categoria* referencia **categoria**(id_categoria) [Relacionamento 1:N]
-* **plano** (<u>id_plano</u>, nome, preco, descricao, icone)
-* **plano_conteudo** (<u>*id_plano*</u>, <u>*id_conteudo*</u>)
-  * *id_plano* referencia **plano**(id_plano)
-  * *id_conteudo* referencia **conteudo**(id_conteudo) [Relacionamento N:N resolvido por associativa]
-* **inscricao** (<u>id_inscricao</u>, nome, email, carreira, data_cadastro)
-
-## 2. Normalização
-* **1FN (Primeira Forma Normal):** Todos os atributos possuem valores atômicos e indivisíveis; não existem colunas multivaloradas ou grupos repetitivos.
-* **2FN (Segunda Forma Normal):** A base já atende à 1FN e todos os atributos não-chave dependem totalmente da totalidade da chave primária (especialmente na tabela associativa `plano_conteudo`, cuja chave é composta).
-* **3FN (Terceira Forma Normal):** A base já atende à 2FN e nenhum atributo não-chave possui dependência transitiva de outro atributo não-chave.
+Relacionamentos: cliente 1:N inscricao; plano 1:N inscricao; cliente 1:N mensagem (opcional);
+plano N:N recurso, resolvido pela tabela associativa plano_recurso.
+Normalização: 1FN (atributos atômicos), 2FN (sem dependência parcial), 3FN (sem dependência transitiva).

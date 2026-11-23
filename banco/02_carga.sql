@@ -1,65 +1,36 @@
--- =============================================================================
--- BANCO DE DADOS: APROVACAST
--- DISCIPLINA: Banco de Dados | PROFESSOR: Sidiney de Sousa Araujo
--- ARQUIVO: 02_carga.sql (Povoamento dos dados de teste)
--- =============================================================================
+-- AprovaCast - Carga dos dados de teste (executar depois do 01_criacao.sql)
 
--- 1. CARGA DA TABELA CATEGORIA
-INSERT INTO categoria (nome) VALUES 
-('Carreiras Policiais'),
-('OAB e Jurídico'),
-('Carreiras Fiscais e Administrativas'),
-('Geral e Atualidades');
+INSERT INTO plano (nome, preco, descricao) VALUES
+('Plano Básico', 0.00, 'Notícias de editais e podcasts introdutórios.'),
+('OAB & Jurídico', 29.90, 'Legislação narrada e súmulas do STF/STJ.'),
+('Concursos Federais', 49.90, 'Carreiras policiais, fiscais e administrativas.'),
+('AprovaCast VIP (IA)', 79.90, 'Acesso total, resumos com IA e flashcards em áudio.');
 
--- 2. CARGA DA TABELA CONTEUDO (Aulas e resumos em áudio)
-INSERT INTO conteudo (id_categoria, titulo, duracao_minutos) VALUES 
-(1, 'Direito Penal: Teoria do Crime em 15 minutos', 15),
-(1, 'Processo Penal: Inquérito Policial Descomplicado', 25),
-(2, 'Ética OAB: Estatuto da Advocacia Comentado', 30),
-(2, 'Direito Constitucional: Direitos Fundamentais (Art. 5º)', 40),
-(3, 'Direito Administrativo: Atos e Poderes da Administração', 35),
-(3, 'AFO: Lei de Responsabilidade Fiscal e Orçamento', 28),
-(4, 'Atualidades: Panorama Semanal de Concursos e Editais', 20);
+INSERT INTO recurso (nome, descricao) VALUES
+('Áudio offline', 'Download das aulas para estudar sem internet.'),
+('Resumos por IA', 'Resumos gerados e revisados por inteligência artificial.'),
+('Legislação narrada', 'Leis e súmulas convertidas em áudio.'),
+('Simulados', 'Bancos de questões com correção comentada.'),
+('Flashcards em áudio', 'Cartões de revisão em formato sonoro.'),
+('Chatbot 24h', 'Atendimento por assistente virtual.');
 
--- 3. CARGA DA TABELA PLANO (Exatamente os planos exibidos no site)
-INSERT INTO plano (nome, preco, descricao, icone) VALUES 
-('Plano Básico', 0.00, 'Acesso diário a notícias de editais e podcasts introdutórios de matérias gerais.', '🎧'),
-('OAB & Jurídico', 29.90, 'Legislação seca em áudio narrada na velocidade que você quiser + súmulas do STF/STJ.', '⚖️'),
-('Concursos Federais', 49.90, 'Carreiras Policiais, Fiscais e Administrativas com simulados e jurisprudência em áudio.', '🏛️'),
-('AprovaCast VIP (IA)', 79.90, 'Acesso total + resumos com Gemini IA, flashcards em áudio e dúvidas no Chatbot 24h.', '🤖');
+INSERT INTO plano_recurso (id_plano, id_recurso) VALUES
+(1,1), (1,3), (2,1), (2,3), (2,6), (3,1), (3,4), (3,6),
+(4,1), (4,2), (4,4), (4,5), (4,6);
 
--- 4. CARGA DA TABELA ASSOCIATIVA PLANO_CONTEUDO (Muitos para Muitos)
--- Plano Básico (id_plano = 1) tem acesso apenas a Atualidades (id_conteudo = 7)
-INSERT INTO plano_conteudo (id_plano, id_conteudo) VALUES 
-(1, 7);
+INSERT INTO cliente (nome, email, telefone, data_cadastro) VALUES
+('Ana Souza', 'ana@email.com', '86999990001', '2026-10-01'),
+('Bruno Lima', 'bruno@email.com', '86999990002', '2026-10-05'),
+('Carla Mendes', 'carla@email.com', '86999990003', '2026-10-12'),
+('Diego Santos', 'diego@email.com', '86999990004', '2026-11-02'),
+('Elisa Rocha', 'elisa@email.com', '86999990005', '2026-11-10');
 
--- Plano OAB & Jurídico (id_plano = 2) tem acesso a OAB/Jurídico e Atualidades (conteudos 3, 4, 7)
-INSERT INTO plano_conteudo (id_plano, id_conteudo) VALUES 
-(2, 3),
-(2, 4),
-(2, 7);
+INSERT INTO inscricao (id_cliente, id_plano, data_inscricao, status) VALUES
+(1,1,'2026-10-01','ativa'), (1,4,'2026-10-15','ativa'),
+(2,2,'2026-10-06','ativa'), (3,3,'2026-10-12','cancelada'),
+(4,4,'2026-11-02','ativa'), (5,2,'2026-11-10','pendente');
 
--- Plano Concursos Federais (id_plano = 3) tem acesso a Policiais, Fiscais e Atualidades (conteudos 1, 2, 5, 6, 7)
-INSERT INTO plano_conteudo (id_plano, id_conteudo) VALUES 
-(3, 1),
-(3, 2),
-(3, 5),
-(3, 6),
-(3, 7);
-
--- Plano VIP IA (id_plano = 4) tem acesso total a todos os conteúdos (conteudos 1 a 7)
-INSERT INTO plano_conteudo (id_plano, id_conteudo) VALUES 
-(4, 1),
-(4, 2),
-(4, 3),
-(4, 4),
-(4, 5),
-(4, 6),
-(4, 7);
-
--- 5. CARGA DA TABELA INSCRICAO (Leads de teste recebidos pelo formulário)
-INSERT INTO inscricao (nome, email, carreira) VALUES 
-('Carlos Eduardo da Silva', 'carlos.silva@email.com', 'policial'),
-('Mariana Ferreira Lima', 'mariana.lima@email.com', 'juridica'),
-('Lucas Gabriel Santos', 'lucas.santos@email.com', 'fiscal'),
-('Beatriz Costa Ribeiro', 'beatriz.costa@email.com', 'juridica');
+INSERT INTO mensagem (id_cliente, conteudo, resposta, data_envio) VALUES
+(1, 'Quais são os planos?', 'Temos 4 planos, do Básico ao VIP com IA.', '2026-10-15 10:00:00'),
+(2, 'O plano OAB inclui súmulas?', 'Sim! Inclui legislação narrada e súmulas STF/STJ.', '2026-10-20 14:30:00'),
+(NULL, 'Como cancelar?', 'Você pode cancelar quando quiser, sem fidelidade.', '2026-11-05 09:15:00');

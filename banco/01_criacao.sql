@@ -1,59 +1,54 @@
--- =============================================================================
--- BANCO DE DADOS: APROVACAST
--- DISCIPLINA: Banco de Dados | PROFESSOR: Sidiney de Sousa Araujo
--- ARQUIVO: 01_criacao.sql (Ordem de dependência respeitada)
--- =============================================================================
+-- AprovaCast - Script de criação das tabelas (PostgreSQL)
+-- Executar em um banco vazio. As tabelas são criadas na ordem de dependência.
 
--- 1. TABELA CATEGORIA (Pai no relacionamento 1:N)
-CREATE TABLE IF NOT EXISTS categoria (
-    id_categoria SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL UNIQUE
+DROP TABLE IF EXISTS mensagem, inscricao, cliente, plano_recurso, recurso, plano CASCADE;
+
+-- 1. PLANO: planos de assinatura exibidos na vitrine do site
+CREATE TABLE plano (
+    id_plano   SERIAL PRIMARY KEY,
+    nome       VARCHAR(80)   NOT NULL UNIQUE,
+    preco      NUMERIC(10,2) NOT NULL CHECK (preco >= 0),
+    descricao  TEXT
 );
 
--- 2. TABELA CONTEUDO (Filho no relacionamento 1:N)
-CREATE TABLE IF NOT EXISTS conteudo (
-    id_conteudo SERIAL PRIMARY KEY,
-    id_categoria INT NOT NULL,
-    titulo VARCHAR(150) NOT NULL,
-    duracao_minutos INT NOT NULL CHECK (duracao_minutos > 0),
-    CONSTRAINT fk_conteudo_categoria 
-        FOREIGN KEY (id_categoria) 
-        REFERENCES categoria(id_categoria) 
-        ON DELETE RESTRICT 
-        ON UPDATE CASCADE
+-- 2. RECURSO: benefícios que os planos oferecem
+CREATE TABLE recurso (
+    id_recurso SERIAL PRIMARY KEY,
+    nome       VARCHAR(80) NOT NULL UNIQUE,
+    descricao  TEXT
 );
 
--- 3. TABELA PLANO (Exibida na vitrine da landing page)
-CREATE TABLE IF NOT EXISTS plano (
-    id_plano SERIAL PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL UNIQUE,
-    preco NUMERIC(10, 2) NOT NULL CHECK (preco >= 0),
-    descricao TEXT NOT NULL,
-    icone VARCHAR(20) NOT NULL
+-- 3. PLANO_RECURSO: tabela associativa que resolve o N:N entre plano e recurso
+CREATE TABLE plano_recurso (
+    id_plano   INTEGER NOT NULL REFERENCES plano (id_plano) ON DELETE CASCADE,
+    id_recurso INTEGER NOT NULL REFERENCES recurso (id_recurso) ON DELETE CASCADE,
+    PRIMARY KEY (id_plano, id_recurso)
 );
 
--- 4. TABELA PLANO_CONTEUDO (Associativa: resolve o relacionamento N:N entre plano e conteudo)
-CREATE TABLE IF NOT EXISTS plano_conteudo (
-    id_plano INT NOT NULL,
-    id_conteudo INT NOT NULL,
-    PRIMARY KEY (id_plano, id_conteudo),
-    CONSTRAINT fk_plano_conteudo_plano 
-        FOREIGN KEY (id_plano) 
-        REFERENCES plano(id_plano) 
-        ON DELETE CASCADE 
-        ON UPDATE CASCADE,
-    CONSTRAINT fk_plano_conteudo_conteudo 
-        FOREIGN KEY (id_conteudo) 
-        REFERENCES conteudo(id_conteudo) 
-        ON DELETE CASCADE 
-        ON UPDATE CASCADE
+-- 4. CLIENTE: pessoa que se cadastra pelo formulário do site
+CREATE TABLE cliente (
+    id_cliente    SERIAL PRIMARY KEY,
+    nome          VARCHAR(120) NOT NULL,
+    email         VARCHAR(150) NOT NULL UNIQUE,
+    telefone      VARCHAR(20),
+    data_cadastro DATE NOT NULL DEFAULT CURRENT_DATE
 );
 
--- 5. TABELA INSCRICAO (Armazena os cadastros do formulário do site)
-CREATE TABLE IF NOT EXISTS inscricao (
-    id_inscricao SERIAL PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    email VARCHAR(150) NOT NULL UNIQUE,
-    carreira VARCHAR(100) NOT NULL,
-    data_cadastro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+-- 5. INSCRICAO: liga um cliente a um plano (1:N com cliente e 1:N com plano)
+CREATE TABLE inscricao (
+    id_inscricao   SERIAL PRIMARY KEY,
+    id_cliente     INTEGER NOT NULL REFERENCES cliente (id_cliente) ON DELETE RESTRICT,
+    id_plano       INTEGER NOT NULL REFERENCES plano (id_plano) ON DELETE RESTRICT,
+    data_inscricao DATE NOT NULL DEFAULT CURRENT_DATE,
+    status         VARCHAR(20) NOT NULL DEFAULT 'ativa'
+                   CHECK (status IN ('ativa', 'pendente', 'cancelada'))
+);
+
+-- 6. MENSAGEM: perguntas feitas ao chatbot e as respostas da IA
+CREATE TABLE mensagem (
+    id_mensagem SERIAL PRIMARY KEY,
+    id_cliente  INTEGER REFERENCES cliente (id_cliente) ON DELETE SET NULL,
+    conteudo    TEXT NOT NULL,
+    resposta    TEXT,
+    data_envio  TIMESTAMP NOT NULL DEFAULT now()
 );
